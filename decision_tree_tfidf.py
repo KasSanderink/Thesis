@@ -1,4 +1,6 @@
-# Classification of a text-based dataset using a pipeline.
+# Classification of a text-based dataset using a pipeline. Pipeline consits of 
+# a tf-idf vectorizer and a decision tree model. The actual decision tree is 
+# exported to tree.pdf.
 ###############################################################################
 
 # Currently unused imports
@@ -25,7 +27,7 @@ from import_documents import import_documents
 
 def visualize_tree(tree_string):
     source = Source(tree_string)
-    source.render('tree.gv', view=True)
+    source.render('tree', view=True)
     return 0
 
 # Initialize data. Then split it in a train and a test set, and train the model

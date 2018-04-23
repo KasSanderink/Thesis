@@ -11,7 +11,7 @@ import re
 from stop_words import get_stop_words
 
 stop_words = get_stop_words('en')
-max_strings = 5000
+max_strings = 500
 
 
 # Stem and remove stop words
