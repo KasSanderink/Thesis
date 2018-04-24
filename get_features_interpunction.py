@@ -15,7 +15,6 @@ from generate_documents import document_generator
 def generate_features():
     n_features = 8
     gen = document_generator()
-    dataset = np.array(list(range(n_features)))
     punctuation = ['.', ':', ';', '!', '?']
     n_instances = sum(1 for i in gen)
     result = np.empty([n_instances, n_features], dtype=int)
@@ -56,7 +55,7 @@ def generate_relative_interpunction():
 
 # Select all instances within a certain time period (between start_year and 
 # star_year + step_size)
-def create_period_csv(df, start_year, step_size):
+def _create_period_csv(df, start_year, step_size):
     return df[(df['year'] >= start_year) &
               (df['year'] < start_year + step_size)]
 
@@ -67,7 +66,7 @@ def generate_period_features(relative=False):
     step_size = 5
     df = load_df(relative)
     for year in range(first_year, last_year, step_size):
-        period_df = create_period_csv(df, year, step_size)
+        period_df = _create_period_csv(df, year, step_size)
         period = str(year) + "-" + str(year+step_size)
         if relative:
             period_df.to_csv("interpunction_relative" + period + ".csv",

@@ -1,6 +1,7 @@
 # Assuming there's a folder called 'COCA' in the current working directiory 
 # which contains some number of subfolders. The names of these folders are the 
-# targets. The files in these folders are the instances of the dataset.
+# targets. The files in these folders are the instances of the dataset. Doesn't
+# work on large datasets. Use generate_documents.py instead.
 ###############################################################################
 
 # Import libraries

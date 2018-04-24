@@ -10,10 +10,11 @@ from stop_words import get_stop_words
 
 def document_generator(strip=True):
     path = os.getcwd()
-    folders = glob.glob(path+'\COCA\*')
+    folders = glob.glob(path+'\data\COCA\*')
     n_folders = len(folders)
     n_instance = -1
     for i in range(n_folders):
+        print(i)
         folder = folders[i]
         target = i
         files = glob.glob(folder+'\*')
