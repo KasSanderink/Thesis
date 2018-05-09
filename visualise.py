@@ -11,7 +11,6 @@ def barplot(mean_data, period, x_ticks):
     bar_width = 0.15
     i = 0
     x_labels = np.arange(len(mean_data.index))
-    print(x_labels)
     figure, ax = plt.subplots()
     for index, row in mean_data.iterrows():
         bar = ax.bar(x_labels + (i * bar_width) - 0.3, row, bar_width, 
@@ -40,15 +39,19 @@ def load_data(path, header):
     return data
 
 def generate_barplots():
-    path = "\preprocessed\COCA\interpunction_relative"
+    path = "\preprocessed\COCA\sources_all"
     periods = ["1990-1995", "1995-2000", "2000-2005", "2005-2010", "2010-2015"]
+    periods = ["1990-2015"]
     features = ['full_stop', 'colon', 'semi_colon', 'exclamation', 'question']
+    features = ['apa','apa2', 'n_year']
     header = ['full_stop', 'colon', 'semi_colon', 'exclamation',
                     'question', 'n_chars', 'year', 'target']
+    header = features + ['year', 'target']
     x_ticks = ['academic', 'fiction', 'magazine', 'newspaper', 'spoken']
     for period in periods:
         data = load_data(os.getcwd()+path+period+".csv", header)
         mean_data = get_means(data, features)
+        print(mean_data)
         barplot(mean_data, period, x_ticks)
     return 0
 
