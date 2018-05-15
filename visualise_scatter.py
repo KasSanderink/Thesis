@@ -24,24 +24,33 @@ def noun_pronoun_data():
 
     result.to_csv(path+'/preprocessed/COCA/POS_noun_pronoun.csv', index=False)
 
-def scatter_plot(file, f1, f2):
+# file is a csv with features, f1 and f2 are the features to be plotted. Binary
+# can be None, or a number. If it's a number the corresponding genre will 
+# occur in red, and all the other genres in blue (making a X vs not-X 
+# distinction). The binary part is a bit awkward but it works.
+def scatter_plot(file, f1, f2, binary=None):
     path = os.getcwd()
     data = pd.read_csv(file)
     data = data[pd.notnull(data)] # Remove NaN
     target = data['target']
-    colors = ['blue', 'green', 'blue', 'blue', 'blue']
-    labels = ['aca', 'fic', 'mag', 'new', 'spo']
+    colors = ['blue', 'green', 'orange', 'red']
+    genres = [0, 1, 2, 3]
+    if binary != None:
+        colors = ['blue'] * 4
+        colors[binary] = 'red'
+        genres.remove(binary)
+        genres.append(binary)
+    labels = ['academic', 'fiction', 'magazine', 'newspaper']
     fig, ax = plt.subplots()
-    for i in [0,2,3,4,1]:
+    for i in genres:
         X_genre = data[(data['target']) == i][f1]
         Y_genre = data[(data['target']) == i][f2]
-        ax.scatter(X_genre, Y_genre, c=colors[i], label=labels[i],
-                   alpha=0.5)
+        ax.scatter(X_genre, Y_genre, c=colors[i], label=labels[i])
     ax.legend()
-    # plt.xlabel('Relative noun occurence')
-    # plt.ylabel('Relative pronoun occurence')
+    plt.xlabel(f1)
+    plt.ylabel(f2)
     plt.show()
 
 # noun_pronoun_data()
-scatter_plot(os.getcwd() + '/preprocessed/COCA/sources_all1990-2015.csv',
-             's1', 's3')
+scatter_plot(os.getcwd() + '/preprocessed/COCA/POS_relative.csv',
+             '._rel', ':_rel', binary=0)

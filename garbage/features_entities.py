@@ -7,7 +7,7 @@ from time import time
 import numpy as np
 
 # Import self-written libs
-from generate_documents import file_generator
+from generate_documents import document_generator
 
 # Import Spacy libs
 import spacy
@@ -19,10 +19,11 @@ def get_tagset():
     return tagset
 
 def get_entities():
-    gen = file_generator()
+    gen = document_generator()
     tagset = get_tagset()
     n_features = len(tagset) + 2
-    n_instances = 135 # sum(1 for i in gen) # 18510 # sum(1 for i in gen) # 185618 
+    n_instances = sum(1 for i in gen) # 18510 # sum(1 for i in gen) # 185618 
+    gen = document_generator()
     result = np.empty([n_instances, n_features])
     nlp = spacy.load('en', disable=['tagger', 'parser', 'textcat'])
     for file in gen:

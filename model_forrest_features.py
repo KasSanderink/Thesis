@@ -11,6 +11,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn import svm
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 
@@ -32,7 +34,7 @@ def main(file):
     predictions = pipeline.predict(X_test)
     print("Done, {0:.1f}s".format(time()-t0))
     score = accuracy_score(y_test, predictions)
-    print("Accuracy: {}".format(score))
+    print("Accuracy: {0:.2f}".format(score))
     return 0
 
-main(os.getcwd() + "/preprocessed/COCA/POS_wow.csv")
+main(os.getcwd() + "/preprocessed/COCA/POS_rel.csv")
