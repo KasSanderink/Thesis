@@ -52,4 +52,27 @@ def generate_barplots():
         barplot(mean_data, period, x_ticks)
     return 0
 
-generate_barplots()
+def visualise_feature(feature):
+    data = pd.read_csv(os.getcwd() + '/preprocessed/COCA/all_features.csv')
+    data = data[[feature, 'year', 'target']]
+    years = list(range(1990, 2016)) # sorted(list(set(data['year'])))
+    targets = [0,1,2,3] # sorted(list(set(data['target'])))
+    genres = ['academic', 'fiction', 'newspaper', 'magazine']
+    df = pd.DataFrame(index=years)
+    for i in targets:
+        result = []
+        for year in years:
+            instances = data[(data['year'] == year) & (data['target'] == i)]
+            feature_col = instances[feature]
+            feature_avg = np.mean(feature_col)
+            result.append(feature_avg)
+        df[genres[i]] = result
+    print(df)
+    df.plot(kind='line')
+    plt.xlabel('Year')
+    plt.ylabel('Feature average')
+    plt.title('Feature: "{}" sorted by genre and year'.format(feature))
+    plt.show()
+    return 0
+
+visualise_feature('flesh')

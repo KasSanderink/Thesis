@@ -17,7 +17,6 @@ def document_generator():
         target = i
         files = glob.glob(folder+'/*')
         n_files = len(files)
-        print(folder)
         for j in range(n_files):
             file = files[j]
             year = files[j].rsplit("_",1)[1][:4]

@@ -28,9 +28,12 @@ def noun_pronoun_data():
 # can be None, or a number. If it's a number the corresponding genre will 
 # occur in red, and all the other genres in blue (making a X vs not-X 
 # distinction). The binary part is a bit awkward but it works.
-def scatter_plot(file, f1, f2, binary=None):
-    path = os.getcwd()
-    data = pd.read_csv(file)
+def scatter_plot(file, f1, f2, binary=None, instance=None):
+    if type(file) == str:
+        path = os.getcwd()
+        data = pd.read_csv(file)
+    else:
+        data = file
     data = data[pd.notnull(data)] # Remove NaN
     target = data['target']
     colors = ['blue', 'green', 'orange', 'red']
@@ -46,11 +49,14 @@ def scatter_plot(file, f1, f2, binary=None):
         X_genre = data[(data['target']) == i][f1]
         Y_genre = data[(data['target']) == i][f2]
         ax.scatter(X_genre, Y_genre, c=colors[i], label=labels[i])
+    if instance !=None:
+        ax.scatter(instance[f1], instance[f2], c='green', 
+                   label='current text')
     ax.legend()
     plt.xlabel(f1)
     plt.ylabel(f2)
     plt.show()
 
 # noun_pronoun_data()
-scatter_plot(os.getcwd() + '/preprocessed/COCA/POS_relative.csv',
-             '._rel', ':_rel', binary=0)
+# scatter_plot(os.getcwd() + '/preprocessed/COCA/POS_relative.csv',
+#              '._rel', ':_rel', binary=0)
